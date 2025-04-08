@@ -1,0 +1,62 @@
+.audiowide-regular {
+    font-family: "Audiowide", sans-serif;
+    font-weight: 400;
+    font-style: normal;
+  }
+.audiowide-bold {
+    font-family: "Audiowide", sans-serif;
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+html {
+    max-width: 100%;
+    max-height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #333333;
+    color: #f0f0f0;
+    font-family: "Audiowide", sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  body p{
+    font-family: "Roboto", sans-serif;
+    font-style: bold;
+    font-size: 24px;
+    font-weight: 500;
+  }
+.navbar{
+    background-color: #333333;
+    color: #ffffff;
+    padding: 16px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+    height: 4vh;
+  }
+
+#logo{
+    transition: 0.5s;
+}
+
+#logo:hover{
+    cursor: pointer;
+    color: #39ff9c;
+    transition: 0.5s;
+    transform: scale(1.1);
+}
+
+#content{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 96vh;
+  }
