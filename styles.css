@@ -19,20 +19,20 @@ html {
 body{
     margin: 0;
     padding: 0;
-    background-color: #333333;
-    color: #f0f0f0;
-    font-family: "Audiowide", sans-serif;
+    background-color: #121212;
+    font-family: "Roboto", sans-serif;
     font-size: 16px;
     line-height: 1.5;
   }
-  body p{
+  p{
     font-family: "Roboto", sans-serif;
     font-style: bold;
     font-size: 24px;
     font-weight: 500;
+    color: #ffffff;
   }
 .navbar{
-    background-color: #333333;
+    background-color: #121212;
     color: #ffffff;
     padding: 16px;
     display: flex;
@@ -44,11 +44,12 @@ body{
 
 #logo{
     transition: 0.5s;
+    font-family: "Audiowide", sans-serif;
 }
 
 #logo:hover{
     cursor: pointer;
-    color: #39ff9c;
+    color: #1ed760;
     transition: 0.5s;
     transform: scale(1.1);
 }
@@ -60,3 +61,7 @@ body{
     flex-direction: column;
     height: 96vh;
   }
+
+#rowDiv{
+    width: 40vw;
+}
