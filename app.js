@@ -1,3 +1,4 @@
+//Modulo API
 const APIController = (function() {
 
     const clientId ='';
@@ -85,4 +86,120 @@ const APIController = (function() {
         }
     }
 
+})();
+
+
+//Modulo UI
+const UIController = (function() {
+
+    //referencias para os seletores
+    const DOMElements = {
+        genreSelect: '#genre',
+        playlistSelect: '#playlist',
+        buttonSearch: '#search',
+        divSongDetail: '#song-detail',
+        hfToken: '#hidden-token',
+        divSongList: '#song-list',
+    }
+
+    //metodos publicos
+    return{
+
+        //metodo para os input fields
+        inputField() {
+            return {
+                genre: document.querySelector(DOMElements.genreSelect),
+                playlist: document.querySelector(DOMElements.playlistSelect),
+                buttonSearch: document.querySelector(DOMElements.buttonSearch),
+                divSongDetail: document.querySelector(DOMElements.divSongDetail),
+                hfToken: document.querySelector(DOMElements.hfToken),
+                divSongList: document.querySelector(DOMElements.divSongList)
+            }
+        },
+
+        //metodo para criar as opções de generos
+        createGenre(text, value) {
+            const html = 'caption value="${value}">${text}</option>';
+            document.querySelector(DOMElements.genreSelect).insertAdjacentHTML('beforeend', html);
+        },
+
+        //metodo para criar as opções de playlists
+        createPlaylist(text, value) {
+            const html = `<option value="${value}">${text}</option>`;
+            document.querySelector(DOMElements.playlistSelect).insertAdjacentHTML('beforeend', html);
+        },
+
+        //metodo para criar as opções de musicas
+        createTrack(id, name) {
+            const html = `<a href="#" class="song" id="${id}">${name}</a>`;
+            document.querySelector(DOMElements.divSongList).insertAdjacentHTML('beforeend', html);
+        },
+
+        //metodo para criar o card de detalhes da musica
+        createSongDetail(img, title, artist) {
+            const divSongDetail = document.querySelector(DOMElements.divSongDetail);
+            divSongDetail.innerHTML = 
+            `
+            <div class="col-md" id="divSongDetail">
+                    <div class="card" style="width: 18rem;">
+                        <img src="${img}" class="card-img-top" alt="...">
+                        <div class="card-body">
+                          <h3 class="card-title">${title}</h3>
+                          <h5 class="card-text">${artist}</h5>
+                        </div>
+                      </div>
+                </div>
+            `;
+
+            divSongDetail.insertAdjacentElement('beforeend', html);
+        },
+
+        resetTrackDetail (){
+            this.inputField().divSongDetail.innerHTML = '';
+        },
+
+        resetTracks () {
+            this.inputField().divSongList.innerHTML = '';
+            this.inputField().divSongDetail.value = '';
+            this.resetTrackDetail();
+        },
+
+        resetPlaylists() {
+            this.inputField().playlist.innerHTML = '';
+            this.resetTracks();
+        }
+    }
+})();
+
+const AppController = (function(APICtrl, UICtrl) {
+
+    const DOMInputs = UICtrl.inputField();
+
+    const loadGenres = async () => {
+        const token = await APICtrl.getToken();
+        const genres = await APICtrl.getGenres(token);
+
+        genres.forEach(element => {
+            UICtrl.createGenre(element.name, element.id);
+        });
+    }
+
+    DOMInputs.genre.addEventListener('change', async () => {
+        UICtrl.resetPlaylists();
+        const token = UICtrl.getStoredToken().token;
+        const genreSelect = UICtrl.inputField().genre;
+        const genreID = genreSelect.options[genreSelect.selectedIndex].value;
+        const playlists = await APICtrl.getPlaylistsByGenre(token, genreID);
+        playlists.forEach(p => UICtrl.createPlaylist)
+    });
+
+    DOMInputs.buttonSearch.addEventListener('click', async (e) => {
+        e.preventDefault();
+    });
+
+    DOMInputs.divSongList.addEventListener('click', async (e) => {
+        e.preventDefault();
+    });
+
+    
 })();
