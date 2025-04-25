@@ -98,7 +98,7 @@ const UIController = (function() {
         playlistSelect: '#playlist',
         buttonSearch: '#search',
         divSongDetail: '#song-detail',
-        hfToken: '#hidden-token',
+        hfToken: '#hfToken',
         divSongList: '#song-list',
     }
 
@@ -200,7 +200,7 @@ const AppController = (function(APICtrl, UICtrl) {
         const playlistSelect = UICtrl.inputField().playlist;
         const playlistID = playlistSelect.options[playlistSelect.selectedIndex].value;
         const tracks = await APICtrl.getTracks(token, tracksEndPoint);
-        tracks.forEach(t => UICtrl.createTrack(t.track.id, t.track.name));
+        tracks.forEach(e => UICtrl.createTrack(e.track.id, t.track.name));
     });
 
     DOMInputs.divSongList.addEventListener('click', async (e) => {
