@@ -195,11 +195,28 @@ const AppController = (function(APICtrl, UICtrl) {
 
     DOMInputs.buttonSearch.addEventListener('click', async (e) => {
         e.preventDefault();
+        UICtrl.resetTracks();
+        const token = UICtrl.getStoredToken().token;
+        const playlistSelect = UICtrl.inputField().playlist;
+        const playlistID = playlistSelect.options[playlistSelect.selectedIndex].value;
+        const tracks = await APICtrl.getTracks(token, tracksEndPoint);
+        tracks.forEach(t => UICtrl.createTrack(t.track.id, t.track.name));
     });
 
     DOMInputs.divSongList.addEventListener('click', async (e) => {
         e.preventDefault();
+        const token = UICtrl.getStoredToken().token;
+        const trackEndPoint = e.target.id;
+        const track = await APICtrl.getTrack(token, trackEndPoint);
+        UICtrl.createSongDetail(track.album.images[2].url, track.name, track.artists[0].name);
     });
 
-    
-})();
+    return {
+        init() {
+            console.log('App is running...');
+            loadGenres();
+        }
+    }
+})(UIController, APIController);
+
+AppController.init();
