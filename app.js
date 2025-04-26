@@ -1,24 +1,27 @@
 //Modulo API
 const APIController = (function() {
 
-    const clientId ='';
-    const clientSecret ='';
+    var client_id = '4671c4c3dd7d4cda86acbdae37ccfa00';
+    var client_secret = 'a302f5527b644ebbb2cd02a46fbb07d5';
 
-    //Metodos privados
-    const _getToken = async () => {
-        const response = await fetch('https://accounts.spotify.com/api/token', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Authorization': 'Basic ' + btoa(clientId + ':' + clientSecret)
-        },
-            body: 'grant_type=client_credentials'
+    var authOptions = {
+    url: 'https://accounts.spotify.com/api/token',
+    headers: {
+        'Authorization': 'Basic ' + (new Buffer.from(client_id + ':' + client_secret).toString('base64'))
+    },
+    form: {
+        grant_type: 'client_credentials'
+    },
+    json: true
+    };
+
+    request.post(authOptions, function(error, response, body) {
+    if (!error && response.statusCode === 200) {
+        var token = body.access_token;
+    }
     });
 
-    const data = await response.json();
-    return data.access_token;
-    }
-
+    //Metodos privados
     const _getGenres = async (token) => {
 
         const result = await fetch('https://api.spotify.com/v1/browse/categories?locale=sv_US', {
